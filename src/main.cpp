@@ -36,6 +36,8 @@
 using namespace Stockfish;
 
 int main(int argc, char* argv[]) {
+  
+  //myLog("app start");
 
   std::cout << engine_info() << std::endl;
 
@@ -59,5 +61,8 @@ int main(int argc, char* argv[]) {
   variants.clear_all();
   pieceMap.clear_all();
   delete XBoard::stateMachine;
+
+  //myLog("app end");
+
   return 0;
 }

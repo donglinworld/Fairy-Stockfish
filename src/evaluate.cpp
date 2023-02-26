@@ -76,29 +76,18 @@ namespace Eval {
 
   void NNUE::init() {
 
+    //myLog("NNUE::init start");
+
     useNNUE = Options["Use NNUE"];
     if (!useNNUE)
         return;
 
     string eval_file = string(Options["EvalFile"]);
 
-    // Restrict NNUE usage to corresponding variant
-    // Support multiple variant networks separated by semicolon(Windows)/colon(Unix)
-    stringstream ss(eval_file);
     string variant = string(Options["UCI_Variant"]);
-    useNNUE = false;
-    while (getline(ss, eval_file, UCI::SepChar))
-    {
-        string basename = eval_file.substr(eval_file.find_last_of("\\/") + 1);
-        string nnueAlias = variants.find(variant)->second->nnueAlias;
-        if (basename.rfind(variant, 0) != string::npos || (!nnueAlias.empty() && basename.rfind(nnueAlias, 0) != string::npos))
-        {
-            useNNUE = true;
-            break;
-        }
-    }
-    if (!useNNUE)
-        return;
+  
+     //myLog("variant:" + variant);
+     //myLog("eval_file:" + eval_file);
 
     currentNnueVariant = variants.find(variant)->second;
 

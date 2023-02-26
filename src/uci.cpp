@@ -331,6 +331,8 @@ void UCI::loop(int argc, char* argv[]) {
 
       token.clear(); // Avoid a stale if getline() returns empty or blank line
       is >> skipws >> token;
+      
+      //myLog("token: " + token);
 
       if (    token == "quit"
           ||  token == "stop")
@@ -349,15 +351,8 @@ void UCI::loop(int argc, char* argv[]) {
                            : token == "usi"  ? USI
                            : token == "ucci" ? UCCI
                            : XBOARD;
-          string defaultVariant = string(
-#ifdef LARGEBOARDS
-                                           CurrentProtocol == USI  ? "shogi"
-                                         : CurrentProtocol == UCCI ? "xiangqi"
-#else
-                                           CurrentProtocol == USI  ? "minishogi"
-                                         : CurrentProtocol == UCCI ? "minixiangqi"
-#endif
-                                                           : "chess");
+          string defaultVariant =  "xiangqi";
+
           Options["UCI_Variant"].set_default(defaultVariant);
           std::istringstream ss("startpos");
           position(pos, ss, states);
@@ -387,6 +382,7 @@ void UCI::loop(int argc, char* argv[]) {
       else if (token == "d")        sync_cout << pos << sync_endl;
       else if (token == "eval")     trace_eval(pos);
       else if (token == "compiler") sync_cout << compiler_info() << sync_endl;
+      else if (token == "nnueverify") Eval::NNUE::verify();
       else if (token == "export_net")
       {
           std::optional<std::string> filename;
