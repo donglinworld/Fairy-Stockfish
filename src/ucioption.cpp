@@ -189,7 +189,7 @@ void init(OptionsMap& o) {
   o["Slow Mover"]            << Option(100, 10, 1000);
   o["nodestime"]             << Option(0, 0, 10000);
   o["UCI_Chess960"]          << Option(false);
-  o["UCI_Variant"]           << Option("chess", variants.get_keys(), on_variant_change);
+  o["UCI_Variant"]           << Option("xiangqi", on_variant_change);
   o["UCI_AnalyseMode"]       << Option(false);
   o["UCI_LimitStrength"]     << Option(false);
   o["UCI_Elo"]               << Option(1350, 500, 2850);
@@ -199,11 +199,7 @@ void init(OptionsMap& o) {
   o["Syzygy50MoveRule"]      << Option(true);
   o["SyzygyProbeLimit"]      << Option(7, 0, 7);
   o["Use NNUE"]              << Option(true, on_use_NNUE);
-#ifndef NNUE_EMBEDDING_OFF
-  o["EvalFile"]              << Option(EvalFileDefaultName, on_eval_file);
-#else
-  o["EvalFile"]              << Option("<empty>", on_eval_file);
-#endif
+  o["EvalFile"]              << Option((std::string(EvalFileDefaultName)).c_str(), on_eval_file);
   o["TsumeMode"]             << Option(false);
   o["VariantPath"]           << Option("<empty>", on_variant_path);
   o["usemillisec"]           << Option(true); // time unit for UCCI
